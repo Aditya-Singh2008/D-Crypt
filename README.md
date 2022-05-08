@@ -1,5 +1,6 @@
 # D-Crypt
 Staight forward symmetric encryption program.
+
 Usage: dctor [OPTION]... [FILES]...
 Encrypt or decrypt files and text write it in or print it out.
 -[Action(E/D)][Source(t/f)][Output(t/f)]
