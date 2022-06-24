@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"dsymec.h"
+#include"SymmEncryption/dsymec.h"
 
 main(int argc, char *argv[]){
     if(strcmp(argv[1], "--help") == 0){
@@ -14,13 +14,13 @@ main(int argc, char *argv[]){
         getkey();
         charlen = inputlen();
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        xor2(ptrascii, (charlen) - (charlen % 4));
+        shiftrow1(ptrascii);
+        shiftrow2(ptrascii);
+        xor1(ptrascii);
+        xor2(ptrascii);
 
         for(int element = 0; element < charlen; element++){
             printf("%c", *(ptrascii + element));
@@ -36,13 +36,13 @@ main(int argc, char *argv[]){
         getkey();
         charlen = inputlen();
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        xor2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
+        xor2(ptrascii);
+        xor1(ptrascii);
+        shiftrow2(ptrascii);
+        shiftrow1(ptrascii);
 
         for(int element = 0; element < charlen; element++){
             printf("%c", *(ptrascii + element));
@@ -58,39 +58,39 @@ main(int argc, char *argv[]){
         getkey();
         charlen = inputfilelen(argv[2]);
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        xor2(ptrascii, (charlen) - (charlen % 4));
+        shiftrow1(ptrascii);
+        shiftrow2(ptrascii);
+        xor1(ptrascii);
+        xor2(ptrascii);
 
         filewrite(argv[2], ptrascii, charlen);
     }else if(strcmp(argv[1], "-Dff") == 0){
         getkey();
         charlen = inputfilelen(argv[2]);
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        xor2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
+        xor2(ptrascii);
+        xor1(ptrascii);
+        shiftrow2(ptrascii);
+        shiftrow1(ptrascii);
 
         filewrite(argv[2], ptrascii, charlen);
     }else if(strcmp(argv[1], "-Eft") == 0){
         getkey();
         charlen = inputfilelen(argv[2]);
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        xor2(ptrascii, (charlen) - (charlen % 4));
+        shiftrow1(ptrascii);
+        shiftrow2(ptrascii);
+        xor1(ptrascii);
+        xor2(ptrascii);
 
         for(int element = 0; element < charlen; element++){
             printf("%c", *(ptrascii + element));
@@ -106,13 +106,13 @@ main(int argc, char *argv[]){
         getkey();
         charlen = inputfilelen(argv[2]);
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        xor2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
+        xor2(ptrascii);
+        xor1(ptrascii);
+        shiftrow2(ptrascii);
+        shiftrow1(ptrascii);
 
         for(int element = 0; element < charlen; element++){
             printf("%c", *(ptrascii + element));
@@ -128,26 +128,26 @@ main(int argc, char *argv[]){
         getkey();
         charlen = inputlen();
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        xor2(ptrascii, (charlen) - (charlen % 4));
+        shiftrow1(ptrascii);
+        shiftrow2(ptrascii);
+        xor1(ptrascii);
+        xor2(ptrascii);
 
         filewrite(argv[2], ptrascii, charlen);
     }else if(strcmp(argv[1], "-Dtf") == 0){
         getkey();
         charlen = inputlen();
         ptrascii = (int*) malloc(sizeof(int) * charlen);
-        fill(ptrascii);
+        fill(ptrascii, charlen);
         free(tempascii);
 
-        xor2(ptrascii, (charlen) - (charlen % 4));
-        xor1(ptrascii, (charlen) - (charlen % 4));
-        shiftrow2(ptrascii, (charlen) - (charlen % 4));
-        shiftrow1(ptrascii, (charlen) - (charlen % 4));
+        xor2(ptrascii);
+        xor1(ptrascii);
+        shiftrow2(ptrascii);
+        shiftrow1(ptrascii);
 
         filewrite(argv[2], ptrascii, charlen);
     } else{
