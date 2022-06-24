@@ -1,12 +1,12 @@
 int inputlen();
-int filewrite(char *filesname, int * pta, int charlen);
+int filewrite(char *filesname, int *pta, int charlen);
 void getkey();
-void fill(int * ptr);
-void shiftrow1(int * ptr, int modtotal);
-void shiftrow2(int * pta, int modtotal);
-void xor1(int * pta, int modtotal);
-void xor2(int * pta, int modtotal);
-void textout(int * pta, int total);
+void fill(int *pta, int charc);
+void shiftrow1(int *pta);
+void shiftrow2(int *pta);
+void xor1(int *pta);
+void xor2(int *pta);
+void textout(int *pta, int total);
 
 int keyexpand[4] = {2, 3, 6, 9};
 int key[4] = {0};
@@ -80,58 +80,62 @@ void fill(int * pta){
   }
 }
 
-void shiftrow1(int * pta, int modtotal){
-  int swhicher;
-  int group = 0;
+void shiftrow1(int *pta){
+  int swicher;
+  int *sw1 = pta;
+  int *sw2 = (pta + 1);
 
-  while(group < modtotal){
-    int element1 = group + 1;
-    int element2 = group + 2;
-    swhicher = *(pta + element1);
-    *(pta + element1) = *(pta + element2);
-    *(pta + element2) = swhicher;
-    group = group + 4;
+  swicher = *sw1;
+  *sw1 = *sw2;
+  *sw2 = swicher;
+
+  while(*(sw1 += 2) != -1 && *(sw2 += 2) != -1){
+    swicher = *sw1;
+    *sw1 = *sw2;
+    *sw2 = swicher;
   }
 }
 
-void shiftrow2(int * pta, int modtotal){
-  int swhicher;
-  int group = 0;
+void shiftrow2(int *pta){
+  int swicher;
+  int *sw1 = (pta + 1);
+  int *sw2 = (pta + 2);
 
-  while(group < modtotal){
-    int element1 = group;
-    int element2 = group + 2;
-    swhicher = *(pta + element1);
-    *(pta + element1) = *(pta + element2);
-    *(pta + element2) = swhicher;
-    group = group + 4;
+  swicher = *sw1;
+  *sw1 = *sw2;
+  *sw2 = swicher;
+
+  while(*(sw1 += 2) != -1 && *(sw2 += 2) != -1){
+    swicher = *sw1;
+    *sw1 = *sw2;
+    *sw2 = swicher;
   }
 }
 
-void xor1(int * pta, int modtotal){
-  int element = 0;
+void xor1(int *pta){
+  int *xr = pta;
   int keyelement = 0;
 
-  while(element < modtotal){
-    *(pta + element) = *(pta + element) ^ key[keyelement];
-    element++;
-    keyelement++;
-    if(keyelement == 4){
-      keyelement = 0;
+  *xr = *xr ^ key[keyelement];
+
+  while((*++xr ^ key[keyelement++]) >= 0){
+    *xr = *xr ^ key[keyelement];
+    if(keyelement == 3){
+        keyelement = 0;
     }
   }
 }
 
-void xor2(int * pta, int modtotal){
-  int element = 0;
+void xor2(int *pta){
+  int *xr = pta;
   int keyelement = 0;
 
-  while(element < modtotal){
-    *(pta + element) = *(pta + element) ^ keyxored[keyelement];
-    element++;
-    keyelement++;
-    if(keyelement == 4){
-      keyelement = 0;
+  *xr = *xr ^ keyxored[keyelement];
+
+  while((*++xr ^ keyxored[keyelement++]) >= 0){
+    *xr = *xr ^ keyxored[keyelement];
+    if(keyelement == 3){
+        keyelement = 0;
     }
   }
 }
